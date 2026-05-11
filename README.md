@@ -34,6 +34,26 @@ graph TD
     Schema <--> DB
 ```
 
+## 📊 Data Pipeline & Lifecycle
+
+The system implements a streamlined data pipeline following the **Medallion Architecture** principles to ensure data quality and traceability:
+
+```mermaid
+graph LR
+    A[Raw Input] -->|Ingestion| B(Bronze: Raw Tables)
+    B -->|Validation| C(Silver: Structured Data)
+    C -->|Decision Support Engine| D(Gold: Analysis & Insights)
+    D -->|Reporting| E[Management Dashboard]
+    
+    style B fill:#cd7f32,stroke:#333
+    style C fill:#c0c0c0,stroke:#333
+    style D fill:#ffd700,stroke:#333
+```
+
+- **Bronze (Ingestion)**: Captures raw employee feedback and operational data in their original form.
+- **Silver (Processing)**: Sanitizes and structures data using SQLAlchemy models, ensuring schema integrity and handling background synchronization.
+- **Gold (Insights)**: The **Decision Support Engine** enriches the data with automated department routing, priority scoring, and recommended actions, transforming raw records into actionable insights.
+
 ### 1. Database & Schema Strategy
 - **Multi-Schema Design**: Implements logical separation within PostgreSQL using custom schemas (`internal_portal`). This ensures a clear boundary between core operational data and potential future integrations.
 - **Medallion-inspired Processing**: Although a single-node setup, the data flows from raw submission (Bronze) to analyzed results (Gold) within the `Complaint` lifecycle, ensuring auditability of automated recommendations.
