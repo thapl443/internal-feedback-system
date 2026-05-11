@@ -21,6 +21,13 @@ def init_db():
             # Ensure the custom schema exists before table creation
             with engine.connect() as conn:
                 conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {schema_name}"))
+                
+                # Hotfix Migration: Ensure 'sentiment' column exists (Senior practice for demo envs)
+                try:
+                    conn.execute(text(f"ALTER TABLE {schema_name}.complaints ADD COLUMN IF NOT EXISTS sentiment VARCHAR(50)"))
+                except Exception:
+                    pass # Table might not exist yet, Base.metadata.create_all will handle it
+                
                 conn.commit()
 
             Base.metadata.create_all(bind=engine)

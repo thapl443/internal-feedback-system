@@ -56,7 +56,7 @@ class AIInferenceService:
         result = {
             "suggested_department": "General Admin",
             "priority_score": 1,
-            "ai_recommendation": "Assign to department head for initial screening.",
+            "ai_recommendation": "ส่งเรื่องให้หัวหน้าแผนกตรวจสอบข้อมูลเบื้องต้น",
             "sentiment": "Neutral"
         }
 
@@ -65,21 +65,21 @@ class AIInferenceService:
             result.update({
                 "suggested_department": "IT Support",
                 "priority_score": 4,
-                "ai_recommendation": "Identify hardware serial number and verify last maintenance log.",
+                "ai_recommendation": "ตรวจสอบประวัติอุปกรณ์และทำการรีเซ็ตรหัสผ่านเบื้องต้น พร้อมประสานงานทีม Support เข้าตรวจสอบ",
                 "sentiment": "Negative"
             })
         elif any(w in text for w in ["salary", "bonus", "leave", "เงิน", "สวัสดิการ", "ลา"]):
             result.update({
                 "suggested_department": "HR",
                 "priority_score": 3,
-                "ai_recommendation": "Coordinate with payroll and update employee benefits portal.",
+                "ai_recommendation": "ตรวจสอบระเบียบพนักงานและประสานงานฝ่ายบุคคลเพื่อชี้แจงข้อมูลเพิ่มเติม",
                 "sentiment": "Neutral"
             })
         elif any(w in text for w in ["air", "light", "cleaning", "แอร์", "ไฟ", "สะอาด"]):
             result.update({
                 "suggested_department": "Facilities",
                 "priority_score": 2,
-                "ai_recommendation": "Dispatch maintenance team to the reported location within 24 hours.",
+                "ai_recommendation": "ส่งทีมช่างอาคารเข้าตรวจสอบพื้นที่และแก้ไขภายใน 24 ชั่วโมง",
                 "sentiment": "Negative"
             })
             
