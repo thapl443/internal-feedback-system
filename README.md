@@ -58,7 +58,13 @@ graph LR
 - **Multi-Schema Design**: Implements logical separation within PostgreSQL using custom schemas (`internal_portal`). This ensures a clear boundary between core operational data and potential future integrations.
 - **Medallion-inspired Processing**: Although a single-node setup, the data flows from raw submission (Bronze) to analyzed results (Gold) within the `Complaint` lifecycle, ensuring auditability of automated recommendations.
 
-### 2. Backend Implementation (FastAPI)
+### 2. AI Inference Layer (Prompt Engineering)
+- **Structured Data Extraction**: Implements a dedicated `AIInferenceService` that translates unstructured feedback into actionable JSON payloads using Pydantic validation.
+- **Prompt Strategy**: Utilizes a clear System/User prompt separation to ensure model determinism and consistent categorization across IT, HR, and Facilities departments.
+- **Sentiment Analysis**: Integrated automated sentiment detection to help prioritize urgent negative feedback for immediate management attention.
+- **Extensible Provider Logic**: The architecture is designed to be model-agnostic, supporting seamless switching between local heuristics and external LLM APIs (OpenAI/Gemini).
+
+### 3. Backend Implementation (FastAPI)
 - **Asynchronous Execution**: Leverages Python's `asyncio` and FastAPI's background tasks for non-blocking ETL processes and data seeding.
 - **Robust Initialization**: Features a custom database initialization wrapper with retry logic to ensure stability in containerized environments (handling race conditions during DB startup).
 - **Extensible Service Layer**: Business logic is decoupled into a dedicated `InternalPortalService`, following the Service Layer Pattern for better maintainability and testing.

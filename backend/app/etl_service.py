@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from .models import Complaint, SportsScore, Announcement, SurveyResponse
+from .ai_service import AIInferenceService
 import random
 
 class InternalPortalService:
@@ -19,27 +20,16 @@ class InternalPortalService:
     @staticmethod
     def analyze_complaint(complaint: Complaint):
         """
-        Heuristic-based decision support logic for automated routing.
-        Analyzes subject and description to suggest department and priority.
+        Orchestrates the analysis of complaint content using the AI Inference Service.
+        Demonstrates a professional service-oriented architecture.
         """
-        text = (complaint.subject + " " + complaint.description).lower()
+        # Call the dedicated AI service for text analysis
+        analysis = AIInferenceService.analyze_text(complaint.subject, complaint.description)
         
-        # Rule-based classification engine logic
-        if any(word in text for word in ["คอมพิวเตอร์", "รหัสผ่าน", "เน็ต", "wifi", "internet"]):
-            complaint.suggested_department = "IT Support"
-            complaint.priority_score = 4
-            complaint.ai_recommendation = "ตรวจสอบประวัติการแจ้งซ่อมอุปกรณ์ และรีเซ็ตรหัสผ่านเบื้องต้น"
-        elif any(word in text for word in ["เงินเดือน", "สวัสดิการ", "ลางาน", "วันหยุด"]):
-            complaint.suggested_department = "HR"
-            complaint.priority_score = 3
-            complaint.ai_recommendation = "ตรวจสอบระเบียบการลาในคู่มือพนักงาน และประสานงานฝ่ายบัญชี"
-        elif any(word in text for word in ["แอร์", "ไฟ", "ความสะอาด", "ที่จอดรถ"]):
-            complaint.suggested_department = "Facilities"
-            complaint.priority_score = 2
-            complaint.ai_recommendation = "ส่งทีมช่างเข้าไปตรวจสอบพื้นที่ภายใน 24 ชม."
-        else:
-            complaint.suggested_department = "General Admin"
-            complaint.priority_score = 1
-            complaint.ai_recommendation = "ส่งเรื่องให้หัวหน้าแผนกตรวจสอบข้อมูลเพิ่มเติม"
+        # Mapping structured output to DB model
+        complaint.suggested_department = analysis.suggested_department
+        complaint.priority_score = analysis.priority_score
+        complaint.ai_recommendation = analysis.ai_recommendation
+        complaint.sentiment = analysis.sentiment
 
         return complaint

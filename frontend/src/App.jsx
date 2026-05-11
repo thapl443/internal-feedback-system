@@ -128,6 +128,7 @@ function App() {
               <div className="ai-badge-group">
                 <span className="badge badge-primary">แนะแผนก: {c.suggested_department}</span>
                 <span className={`badge priority-${c.priority_score > 3 ? 'high' : 'medium'}`}>ความสำคัญ: {c.priority_score}/5</span>
+                <span className={`badge sentiment-${c.sentiment?.toLowerCase()}`}>Sentiment: {c.sentiment}</span>
               </div>
             </div>
             <div className="ai-recommendation">

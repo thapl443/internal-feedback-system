@@ -24,6 +24,7 @@ class Complaint(Base):
     suggested_department = Column(String(100)) # Targeted department for resolution
     priority_score = Column(Integer)           # Heuristic priority score (1-5)
     ai_recommendation = Column(Text)           # System-generated resolution hint
+    sentiment = Column(String(50))             # Predicted sentiment (Positive, Neutral, Negative)
     status = Column(String(50), default="Pending")
     created_at = Column(DateTime, default=datetime.utcnow)
 
