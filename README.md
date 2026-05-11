@@ -4,6 +4,36 @@ Nexus is a full-stack internal operations platform designed to streamline employ
 
 ## 🏗 Architecture & Engineering Decisions
 
+### System Architecture
+```mermaid
+graph TD
+    User((Employee / Admin))
+    
+    subgraph "Frontend Layer (React + Vite)"
+        UI[Web Dashboard]
+        State[State Management / Axios]
+    end
+    
+    subgraph "Backend Layer (FastAPI)"
+        API[REST API Endpoints]
+        Service[InternalPortalService]
+        Engine[Decision Support Engine]
+    end
+    
+    subgraph "Data Layer (PostgreSQL)"
+        DB[(Postgres DB)]
+        Schema[Schema: internal_portal]
+    end
+
+    User <--> UI
+    UI <--> State
+    State <--> API
+    API <--> Service
+    Service <--> Engine
+    Service <--> Schema
+    Schema <--> DB
+```
+
 ### 1. Database & Schema Strategy
 - **Multi-Schema Design**: Implements logical separation within PostgreSQL using custom schemas (`internal_portal`). This ensures a clear boundary between core operational data and potential future integrations.
 - **Medallion-inspired Processing**: Although a single-node setup, the data flows from raw submission (Bronze) to analyzed results (Gold) within the `Complaint` lifecycle, ensuring auditability of automated recommendations.
