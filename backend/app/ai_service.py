@@ -79,7 +79,7 @@ class AIInferenceService:
             result.update({
                 "suggested_department": "Facilities",
                 "priority_score": 2,
-                "ai_recommendation": "ส่งทีมช่างอาคารเข้าตรวจสอบพื้นที่และแก้ไขภายใน 24 ชั่วโมง",
+                "ai_recommendation": "ส่งทีมช่างอาคารเข้าตรวจสอบพื้นที่และแก้ไขภายใน 1 ชั่วโมง",
                 "sentiment": "Negative"
             })
             
